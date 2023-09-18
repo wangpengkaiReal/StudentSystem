@@ -25,15 +25,20 @@ class Viem:
         :return:
         """
         self.__input_button()
-        button = int(input("请输入选项:"))
-        if button == 1:
-            self.__increase_data()
-        elif button == 2:
-            self.__print_data()
-        elif button == 3:
-            self.__del_data()
-        elif button == 4:
-            self.__revise_data()
+        try:
+            button = int(input("请输入选项:"))
+            if button == 1:
+                self.__increase_data()
+            elif button == 2:
+                self.__print_data()
+            elif button == 3:
+                self.__del_data()
+            elif button == 4:
+                self.__revise_data()
+            else:
+                return 1
+        except Exception as arr:
+            return 1
 
     def __increase_data(self):
         """
@@ -41,8 +46,8 @@ class Viem:
         :return:
         """
         uid = int(input("请输入需要增加的学生uid:"))
-        name = input("请出入学生姓名:")
-        gender = input("请输入学生的性别")
+        name = input("请输入学生姓名:")
+        gender = input("请输入学生的性别:")
         mode = model.Model(uid, name, gender).data_dict()
         come = self.contorller.append_student_data(mode)
         if come:
@@ -77,13 +82,17 @@ class Viem:
             print('数据不存在！')
 
     def __revise_data(self):
-        uid = input('请输入需要修改的学生的id:')
+        uid = int(input('请输入需要修改的学生的id:'))
         outcome = self.contorller.print_student_data(uid)
         if outcome:
             name = input('修改后的学生姓名:')
             gender = input('修改后的学生性别:')
             mode = model.Model(outcome['uid'], name, gender).data_dict()
-            self.contorller.revise_student_data(mode)
+            tf = self.contorller.revise_student_data(mode)
+            if tf:
+                print('修改成功')
+            else:
+                print('修改失败')
         else:
             print('需要修改的学生不存在！')
 

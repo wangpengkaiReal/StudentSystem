@@ -37,4 +37,12 @@ class Contorller:
                 return True
 
     def revise_student_data(self, data):
-        pass
+        """
+            修改学生数据
+        :param data: dict,model打包好的字典数据
+        :return: Ture or False
+        """
+        for item in range(len(self.__student_list)):
+            if data['uid'] == self.__student_list[item]['uid']:
+                self.__student_list[item] = data
+                return True
